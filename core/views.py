@@ -6,8 +6,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Lawyer, CaseStudy, Service, BlogPost, ContactRequest
 from .serializers import LawyerSerializer, ServiceSerializer, CaseStudySerializer, BlogPostSerializer, ContactRequestSerializer
-
+from django.shortcuts import redirect
 # Create your views here.
+
+
+def homepage_redirect(request):
+    return redirect("/admin/")  # Redirects to Django Admin
+
 class LawyerViewSet(viewsets.ModelViewSet):
     queryset = Lawyer.objects.all()
     serializer_class = LawyerSerializer
