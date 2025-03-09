@@ -7,8 +7,23 @@ from rest_framework import status
 from .models import Lawyer, CaseStudy, Service, BlogPost, ContactRequest
 from .serializers import LawyerSerializer, ServiceSerializer, CaseStudySerializer, BlogPostSerializer, ContactRequestSerializer
 from django.shortcuts import redirect
+from django.db.utils import IntegrityError
+from django.contrib.auth import get_user_model
 # Create your views here.
 
+User = get_user_model()
+
+def create_superuser():
+    try:
+        if not User.objects.filter(username="admin").exists():
+            User.objects.create_superuser("admin", "admin@example.com", "AdminPassword123")
+            print("Superuser created successfully!")
+        else:
+            print("Superuser already exists!")
+    except IntegrityError:
+        print("Superuser already exists!")
+
+create_superuser()
 
 def homepage_redirect(request):
     return redirect("/admin/")  # Redirects to Django Admin
