@@ -13,17 +13,17 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-def create_superuser():
-    try:
-        if not User.objects.filter(username="admin").exists():
-            User.objects.create_superuser("admin", "admin@example.com", "AdminPassword123")
-            print("Superuser created successfully!")
-        else:
-            print("Superuser already exists!")
-    except IntegrityError:
-        print("Superuser already exists!")
+# def create_superuser():
+#     try:
+#         if not User.objects.filter(username="admin").exists():
+#             User.objects.create_superuser("admin", "admin@example.com", "AdminPassword123")
+#             print("Superuser created successfully!")
+#         else:
+#             print("Superuser already exists!")
+#     except IntegrityError:
+#         print("Superuser already exists!")
 
-create_superuser()
+# create_superuser()
 
 def homepage_redirect(request):
     return redirect("/admin/")  # Redirects to Django Admin
