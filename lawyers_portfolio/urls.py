@@ -17,13 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from core.views import LawyerViewSet, ServiceViewSet, CaseStudyViewSet, BlogPostViewSet, ContactRequestViewSet, homepage_redirect, FAQViewSet
+from core.views import LawyerViewSet, ServiceViewSet, CaseStudyViewSet, BlogPostViewSet, ContactRequestViewSet, homepage_redirect, FAQViewSet, TestimonialViewSet
 
 router = DefaultRouter()
 router.register(r'lawyers', LawyerViewSet)
 router.register(r'services', ServiceViewSet)
 router.register(r'case-studies', CaseStudyViewSet)
 router.register(r'blog-posts', BlogPostViewSet)
+router.register(r'Testimonial', TestimonialViewSet)
 router.register(r'FAQ', FAQViewSet)
 router.register(r'contact-requests', ContactRequestViewSet)
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Lawyer, Service, CaseStudy, BlogPost, ContactRequest, FAQ
+from .models import Lawyer, Service, CaseStudy, BlogPost, ContactRequest, FAQ, Testimonial
 
 class LawyerSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -21,11 +21,16 @@ class BlogPostSerializer(serializers.ModelSerializer):
         model = BlogPost
         fields = '__all__'
 
+class TestimonialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Testimonial
+        fields = '__all__'
+
 class FAQSerializer(serializers.ModelSerializer):
     class Meta:
         model = FAQ
         fields = '__all__'
-        
+
 class ContactRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactRequest
