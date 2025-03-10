@@ -49,6 +49,10 @@ class BlogPostViewSet(viewsets.ModelViewSet):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
 
+class FAQViewSet(viewsets.ModelViewSet):
+    queryset = FAQ.objects.all()
+    serializer_class = FAQSerializer
+    
 class ContactRequestViewSet(viewsets.ModelViewSet):
     queryset = ContactRequest.objects.all()
     serializer_class = ContactRequestSerializer
@@ -114,6 +118,3 @@ Regards,
 
         return Response(serializer.data)
     
-class FAQViewSet(viewsets.ModelViewSet):
-    queryset = FAQ.objects.all()
-    serializer_class = FAQSerializer

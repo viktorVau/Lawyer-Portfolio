@@ -8,16 +8,32 @@ admin.site.index_title = "Welcome to the Lawyer Portfolio Management"
 
 
 
-# Lawyer Admin Customization
+# Lawyer Admin Customization (Only visible to Superusers)
 @admin.register(Lawyer)
 class LawyerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'created_at')  # Displayed columns
-    search_fields = ('name', 'email')  # Search by name or email
-    list_filter = ('created_at',)  # Filter by date
-    ordering = ('-created_at',)  # Order by newest
+    list_display = ('name', 'email', 'phone', 'created_at')
+    search_fields = ('name', 'email')
+    list_filter = ('created_at',)
+    ordering = ('-created_at',)
 
     def has_module_permission(self, request):
-        """Hide the Lawyer model from non-superusers"""
+        """Only superusers can see the Lawyer model in the admin panel."""
+        return request.user.is_superuser
+
+    def has_view_permission(self, request, obj=None):
+        """Only superusers can view lawyers."""
+        return request.user.is_superuser
+
+    def has_add_permission(self, request):
+        """Only superusers can add lawyers."""
+        return request.user.is_superuser
+
+    def has_change_permission(self, request, obj=None):
+        """Only superusers can edit lawyers."""
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        """Only superusers can delete lawyers."""
         return request.user.is_superuser
 
 
