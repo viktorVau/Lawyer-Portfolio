@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Lawyer, Service, CaseStudy, BlogPost, ContactRequest
+from .models import Lawyer, Service, CaseStudy, BlogPost, ContactRequest, FAQ
 
 # Change Django Admin Title
 admin.site.site_header = "Lawyer Portfolio Admin"
@@ -15,6 +15,12 @@ class LawyerAdmin(admin.ModelAdmin):
     search_fields = ('name', 'email')  # Search by name or email
     list_filter = ('created_at',)  # Filter by date
     ordering = ('-created_at',)  # Order by newest
+
+    def has_module_permission(self, request):
+        """Hide the Lawyer model from non-superusers"""
+        return request.user.is_superuser
+
+
 
 # Service Admin
 @admin.register(Service)
@@ -39,4 +45,10 @@ class BlogPostAdmin(admin.ModelAdmin):
 class ContactRequestAdmin(admin.ModelAdmin):
     list_display = ('client_name', 'client_email', 'lawyer', 'created_at')
     search_fields = ('client_name', 'client_email')
+    ordering = ('-created_at',)
+
+@admin.register(FAQ)
+class FAQAdmin(admin.ModelAdmin):
+    list_display = ('question', 'answer', 'lawyer', 'created_at')
+    search_fields = ('question', 'lawyer__name')
     ordering = ('-created_at',)

@@ -1,11 +1,11 @@
 from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Lawyer, CaseStudy, Service, BlogPost, ContactRequest
-from .serializers import LawyerSerializer, ServiceSerializer, CaseStudySerializer, BlogPostSerializer, ContactRequestSerializer
+from .models import Lawyer, CaseStudy, Service, BlogPost, ContactRequest, FAQ
+from .serializers import LawyerSerializer, ServiceSerializer, CaseStudySerializer, BlogPostSerializer, ContactRequestSerializer, FAQSerializer
 from django.shortcuts import redirect
 from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
@@ -27,6 +27,11 @@ User = get_user_model()
 
 def homepage_redirect(request):
     return redirect("/admin/")  # Redirects to Django Admin
+
+class LawyerDetailView(generics.RetrieveAPIView):
+    queryset = Lawyer.objects.all()
+    serializer_class = LawyerSerializer
+    lookup_field = "slug"
 
 class LawyerViewSet(viewsets.ModelViewSet):
     queryset = Lawyer.objects.all()
@@ -108,3 +113,7 @@ Regards,
         client_email_msg.send(fail_silently=False)
 
         return Response(serializer.data)
+    
+class FAQViewSet(viewsets.ModelViewSet):
+    queryset = FAQ.objects.all()
+    serializer_class = FAQSerializer
