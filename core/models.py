@@ -1,10 +1,14 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
 
 # Create your models here.
 
+from django.db import models
+
 # Lawyer's Profile
 class Lawyer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)  # Unique identifier
     email = models.EmailField(unique=True)
