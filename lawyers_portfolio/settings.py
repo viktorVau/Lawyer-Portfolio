@@ -87,8 +87,8 @@ WSGI_APPLICATION = 'lawyers_portfolio.wsgi.application'
 
 
 DATABASES = {
-    # 'default': dj_database_url.config(default='postgres://postgres:darexpon@127.0.0.1:5432/lawyers_db')
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': dj_database_url.config(default='postgres://postgres:darexpon@127.0.0.1:5432/lawyers_db')
+    # 'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
 # Password validation

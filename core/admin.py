@@ -9,6 +9,7 @@ admin.site.index_title = "Welcome to the Lawyer Portfolio Management"
 
 
 # Lawyer Admin Customization (Only visible to Superusers)
+@admin.register(Lawyer)
 class LawyerAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'phone', 'created_at')
     search_fields = ('name', 'email')
@@ -16,13 +17,18 @@ class LawyerAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
 
     def get_queryset(self, request):
-        """Ensure a staff user only sees their assigned lawyer."""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs  # Superusers see all lawyers
-        return qs.filter(user=request.user)  # Staff users see only their own lawyer
+        return qs.filter(user=request.user)  # Staff users only see their lawyer
 
-admin.site.register(Lawyer, LawyerAdmin)
+    def has_change_permission(self, request, obj=None):
+        if obj and request.user == obj.user:
+            return True  # Staff users can edit only their lawyer profile
+        return request.user.is_superuser  # Superusers can edit all lawyers
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser  # Only superusers can delete
 # @admin.register(Lawyer)
 # class LawyerAdmin(admin.ModelAdmin):
 #     list_display = ('name', 'email', 'phone', 'created_at')

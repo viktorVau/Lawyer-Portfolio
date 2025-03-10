@@ -8,7 +8,7 @@ from django.db import models
 
 # Lawyer's Profile
 class Lawyer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name="lawyer_profile")
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)  # Unique identifier
     email = models.EmailField(unique=True)
@@ -38,7 +38,8 @@ class Service(models.Model):
     
 # Case Studies or Success Stories
 class CaseStudy(models.Model):
-    lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE, related_name="case_studies")
+    lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE,  related_name="case_studies")
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True, related_name="case_studies")
     title = models.CharField(max_length=255)
     description = models.TextField()
     outcome = models.TextField()
