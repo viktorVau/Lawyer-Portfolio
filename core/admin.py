@@ -16,25 +16,25 @@ class LawyerAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
     ordering = ('-created_at',)
 
-    def has_module_permission(self, request):
-        """Only superusers can see the Lawyer model in the admin panel."""
-        return request.user.is_superuser
+    # def has_module_permission(self, request):
+    #     """Only superusers can see the Lawyer model in the admin panel."""
+    #     return request.user.is_superuser
 
-    def has_view_permission(self, request, obj=None):
-        """Only superusers can view lawyers."""
-        return request.user.is_superuser
+    # def has_view_permission(self, request, obj=None):
+    #     """Only superusers can view lawyers."""
+    #     return request.user.is_superuser
 
-    def has_add_permission(self, request):
-        """Only superusers can add lawyers."""
-        return request.user.is_superuser
+    # def has_add_permission(self, request):
+    #     """Only superusers can add lawyers."""
+    #     return request.user.is_superuser
 
-    def has_change_permission(self, request, obj=None):
-        """Only superusers can edit lawyers."""
-        return request.user.is_superuser
+    # def has_change_permission(self, request, obj=None):
+    #     """Only superusers can edit lawyers."""
+    #     return request.user.is_superuser
 
-    def has_delete_permission(self, request, obj=None):
-        """Only superusers can delete lawyers."""
-        return request.user.is_superuser
+    # def has_delete_permission(self, request, obj=None):
+    #     """Only superusers can delete lawyers."""
+    #     return request.user.is_superuser
 
 
 
