@@ -61,6 +61,8 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True # Allow any frontend to access API
+
 ROOT_URLCONF = 'lawyers_portfolio.urls'
 
 TEMPLATES = [
