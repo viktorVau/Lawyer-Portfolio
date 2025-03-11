@@ -24,7 +24,7 @@ router.register(r'lawyers', LawyerViewSet)
 router.register(r'services', ServiceViewSet)
 router.register(r'case-studies', CaseStudyViewSet)
 router.register(r'blog-posts', BlogPostViewSet)
-router.register(r'Testimonial', TestimonialViewSet)
+router.register(r'testimonial', TestimonialViewSet)
 router.register(r'FAQ', FAQViewSet)
 router.register(r'contact-requests', ContactRequestViewSet)
 
