@@ -66,7 +66,6 @@ class ContactRequestViewSet(viewsets.ModelViewSet):
     queryset = ContactRequest.objects.all()
     serializer_class = ContactRequestSerializer
 
-    
     def create(self, request, *args, **kwargs):
         # Get the lawyer from the database (assuming there is only one lawyer)
         lawyer = Lawyer.objects.first()
@@ -79,10 +78,9 @@ class ContactRequestViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(data=mutable_data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(lawyer=lawyer)  # Save with lawyer
+        contact_request = serializer.save(lawyer=lawyer)  # Save with lawyer
 
-
-        # Email notifications (same as before)
+        # Email notifications
         lawyer_email = lawyer.email
         lawyer_name = lawyer.name
         client_name = contact_request.name
