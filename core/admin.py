@@ -99,6 +99,6 @@ class FAQAdmin(admin.ModelAdmin):
 # Contact Request Admin
 @admin.register(ContactRequest)
 class ContactRequestAdmin(admin.ModelAdmin):
-    list_display = ('client_name', 'client_email', 'lawyer', 'created_at')
+    list_display = ('name', 'email', 'phone','lawyer', 'created_at')
     search_fields = ('client_name', 'client_email')
     ordering = ('-created_at',)
