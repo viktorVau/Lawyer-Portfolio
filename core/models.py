@@ -36,13 +36,11 @@ class Experience(models.Model):
     title = models.CharField(max_length=255)
     company = models.CharField(max_length=255)
     start_year = models.CharField(max_length=4, null=True)
-    end_year = models.CharField(blank=True, null=True, max_length=4)  
+    end_year = models.CharField(blank=True, null=True, max_length=10)
     is_current = models.BooleanField(default=False)
     responsibilities = models.TextField()
 
-    def __str__(self):  
-        if self.is_current:  
-            return f"{self.title} at {self.company} (Present)"  
+    def __str__(self):   
         return f"{self.title} at {self.company} ({self.start_year} - {self.end_year})"
 
 # Services Offered by the lawyer
