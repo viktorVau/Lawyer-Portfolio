@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Lawyer, Service, CaseStudy, BlogPost, ContactRequest, Testimonial, FAQ
+from .models import Lawyer, Service, CaseStudy, ContactRequest, Testimonial, FAQ
 
 # Change Django Admin Title
 admin.site.site_header = "Lawyer Portfolio Admin"
@@ -71,10 +71,10 @@ class CaseStudyAdmin(admin.ModelAdmin):
     search_fields = ('title', 'lawyer__name')
 
 # Blog Post Admin
-@admin.register(BlogPost)
-class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'lawyer', 'created_at')
-    search_fields = ('title', 'lawyer__name')
+# @admin.register(BlogPost)
+# class BlogPostAdmin(admin.ModelAdmin):
+#     list_display = ('title', 'lawyer', 'created_at')
+#     search_fields = ('title', 'lawyer__name')
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):

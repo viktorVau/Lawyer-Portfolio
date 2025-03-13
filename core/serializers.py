@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Lawyer, Service, CaseStudy, BlogPost, ContactRequest, FAQ, Testimonial
+from .models import Lawyer, Service, Experience,CaseStudy, ContactRequest, FAQ, Testimonial
 
 class LawyerSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -11,15 +11,25 @@ class ServiceSerializer(serializers.ModelSerializer):
         model = Service
         fields = '__all__'
 
+class ExperienceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Experience
+        fields = '__all__'
+
 class CaseStudySerializer(serializers.ModelSerializer):
+    service = serializers.SlugRelatedField(
+        queryset = Service.objects.all(),
+        slug_field ='name'
+    )
+
     class Meta:
         model = CaseStudy
         fields = '__all__'
 
-class BlogPostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BlogPost
-        fields = '__all__'
+# class BlogPostSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = BlogPost
+#         fields = '__all__'
 
 class TestimonialSerializer(serializers.ModelSerializer):
     class Meta:

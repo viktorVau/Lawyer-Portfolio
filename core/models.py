@@ -13,7 +13,13 @@ class Lawyer(models.Model):
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=11)
     address = models.TextField()
+    title = models.CharField(max_length=255, null=True)
+    slogan = models.CharField(max_length=255, null= True)
     bio = models.TextField()
+    tagline = models.CharField(max_length=255, null=True)
+    education = models.CharField(max_length=255, null=True)
+    bar_membership = models.CharField(max_length=255, null= True)
+    certification = models.CharField(max_length=255, null=True)
     profile_image = models.ImageField(upload_to='lawyer_profiles/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -25,6 +31,19 @@ class Lawyer(models.Model):
     def __str__(self):
         return self.name
     
+class Experience(models.Model):
+    lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE, related_name='experience')
+    title = models.CharField(max_length=255)
+    company = models.CharField(max_length=255)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)  # Nullable end date  
+    is_current = models.BooleanField(default=False)
+    responsibilities = models.TextField()
+
+    def __str__(self):  
+        if self.is_current:  
+            return f"{self.title} at {self.company} (Present)"  
+        return f"{self.title} at {self.company} ({self.start_date} - {self.end_date})"
 
 # Services Offered by the lawyer
 class Service(models.Model):
@@ -49,14 +68,14 @@ class CaseStudy(models.Model):
     
 
 # Blog Post
-class BlogPost(models.Model):
-    lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE, related_name="blog_posts")
-    title = models.CharField(max_length=255)
-    content = models.TextField()
-    created_at = models.DateTimeField()
+# class BlogPost(models.Model):
+#     lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE, related_name="blog_posts")
+#     title = models.CharField(max_length=255)
+#     content = models.TextField()
+#     created_at = models.DateTimeField()
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title
 
 # User = get_user_model()
 

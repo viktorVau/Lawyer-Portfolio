@@ -4,8 +4,8 @@ from django.shortcuts import render
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Lawyer, CaseStudy, Service, BlogPost, ContactRequest, FAQ, Testimonial
-from .serializers import LawyerSerializer, ServiceSerializer, CaseStudySerializer, BlogPostSerializer, ContactRequestSerializer, FAQSerializer, TestimonialSerializer
+from .models import Lawyer, CaseStudy,Service, ContactRequest, FAQ, Testimonial, Experience
+from .serializers import LawyerSerializer, ServiceSerializer, CaseStudySerializer, ContactRequestSerializer, FAQSerializer, TestimonialSerializer, ExperienceSerializer
 from django.shortcuts import redirect
 from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
@@ -37,6 +37,10 @@ class LawyerViewSet(viewsets.ModelViewSet):
     queryset = Lawyer.objects.all()
     serializer_class = LawyerSerializer
 
+class ExperienceViewSet(viewsets.ModelViewSet):
+    queryset = Experience.objects.all()
+    serializer_class = ExperienceSerializer
+
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
@@ -45,9 +49,9 @@ class CaseStudyViewSet(viewsets.ModelViewSet):
     queryset = CaseStudy.objects.all()
     serializer_class = CaseStudySerializer
 
-class BlogPostViewSet(viewsets.ModelViewSet):
-    queryset = BlogPost.objects.all()
-    serializer_class = BlogPostSerializer
+# class BlogPostViewSet(viewsets.ModelViewSet):
+#     queryset = BlogPost.objects.all()
+#     serializer_class = BlogPostSerializer
 
 class TestimonialViewSet(viewsets.ModelViewSet):
     queryset = Testimonial.objects.all()
