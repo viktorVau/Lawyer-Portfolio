@@ -72,8 +72,8 @@ class ContactRequestViewSet(viewsets.ModelViewSet):
 
         lawyer_email = contact_request.lawyer.email
         lawyer_name = contact_request.lawyer.name
-        client_name = contact_request.client_name
-        client_email = contact_request.client_email
+        client_name = contact_request.name
+        client_email = contact_request.email
         message = contact_request.message
 
         # Send mail to lawyer
