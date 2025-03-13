@@ -35,7 +35,7 @@ class Experience(models.Model):
     lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE, related_name='experience')
     title = models.CharField(max_length=255)
     company = models.CharField(max_length=255)
-    start_year = models.CharField(max_length=4)
+    start_year = models.CharField(max_length=4, null=True)
     end_year = models.CharField(blank=True, null=True, max_length=4)  
     is_current = models.BooleanField(default=False)
     responsibilities = models.TextField()
