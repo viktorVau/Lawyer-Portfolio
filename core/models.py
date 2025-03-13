@@ -99,15 +99,20 @@ class FAQ(models.Model):
         return self.question
 
 # Contact Requests i.e when a client contacts the lawyer
+
 class ContactRequest(models.Model):
-    lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE, related_name="contact_requests")
+    lawyer = models.ForeignKey(
+        "Lawyer", 
+        on_delete=models.CASCADE, 
+        related_name="contact_requests"
+    )
     name = models.CharField(max_length=255)
     email = models.EmailField()
-    phone = models.CharField(max_length=20, null=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Message from {self.client_email}"
+        return f"Message from {self.email}"
     
 

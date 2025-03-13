@@ -67,13 +67,22 @@ class ContactRequestViewSet(viewsets.ModelViewSet):
     serializer_class = ContactRequestSerializer
 
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        data = request.data.copy()  # Copy request data to modify it
+        
+        # Assign the single lawyer automatically
+        lawyer = Lawyer.objects.first()  # Assuming there's only one lawyer per site
+        if not lawyer:
+            return Response({"error": "No lawyer found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        data["lawyer"] = lawyer.id  # Assign lawyer ID
+
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         contact_request = serializer.save()
 
-        # Email notifications (unchanged)
-        lawyer_email = contact_request.lawyer.email
-        lawyer_name = contact_request.lawyer.name
+        # Email notifications (same as before)
+        lawyer_email = lawyer.email
+        lawyer_name = lawyer.name
         client_name = contact_request.name
         client_email = contact_request.email
         client_phone = contact_request.phone
@@ -103,7 +112,7 @@ Please respond as soon as possible.
             reply_to=[client_email],
         )
         lawyer_email_msg.send(fail_silently=False)
-         
+
         # Send confirmation email to client
         client_email_body = f"""
 Dear {client_name},
