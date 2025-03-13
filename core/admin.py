@@ -67,7 +67,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Experience)
 class ExperienceAdmin(admin.ModelAdmin):
-    list_display = ('title', 'company', 'start_date', 'end_date', 'lawyer')
+    list_display = ('title', 'company', 'start_year', 'end_year', 'lawyer')
     search_fields = ('title', 'lawyer__name')
 
 
