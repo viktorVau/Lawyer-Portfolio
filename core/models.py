@@ -35,15 +35,15 @@ class Experience(models.Model):
     lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE, related_name='experience')
     title = models.CharField(max_length=255)
     company = models.CharField(max_length=255)
-    start_date = models.DateField()
-    end_date = models.DateField(blank=True, null=True)  # Nullable end date  
+    start_year = models.CharField(max_length=4)
+    end_year = models.CharField(blank=True, null=True, max_length=4)  
     is_current = models.BooleanField(default=False)
     responsibilities = models.TextField()
 
     def __str__(self):  
         if self.is_current:  
             return f"{self.title} at {self.company} (Present)"  
-        return f"{self.title} at {self.company} ({self.start_date} - {self.end_date})"
+        return f"{self.title} at {self.company} ({self.start_year} - {self.end_year})"
 
 # Services Offered by the lawyer
 class Service(models.Model):
