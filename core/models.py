@@ -37,7 +37,7 @@ class Experience(models.Model):
     company = models.CharField(max_length=255)
     start_year = models.CharField(max_length=4, null=True)
     end_year = models.CharField(blank=True, null=True, max_length=10)
-    is_current = models.BooleanField(default=False)
+    # is_current = models.BooleanField(default=False)
     responsibilities = models.TextField()
 
     def __str__(self):   

@@ -19,7 +19,7 @@ class ExperienceSerializer(serializers.ModelSerializer):
 class CaseStudySerializer(serializers.ModelSerializer):
     service = serializers.SlugRelatedField(
         queryset = Service.objects.all(),
-        slug_field ='name'
+        slug_field ='title'
     )
 
     class Meta:
