@@ -66,21 +66,21 @@ class ContactRequestViewSet(viewsets.ModelViewSet):
     queryset = ContactRequest.objects.all()
     serializer_class = ContactRequestSerializer
 
+    
     def create(self, request, *args, **kwargs):
         # Get the lawyer from the database (assuming there is only one lawyer)
-        try:
-            lawyer = Lawyer.objects.first()  # Automatically assign the first lawyer
-            if not lawyer:
-                return Response({"error": "No lawyer found in the database."}, status=status.HTTP_400_BAD_REQUEST)
-        except Lawyer.DoesNotExist:
-            return Response({"error": "Lawyer not found."}, status=status.HTTP_400_BAD_REQUEST)
+        lawyer = Lawyer.objects.first()
+        if not lawyer:
+            return Response({"error": "No lawyer found in the database."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Add lawyer to request data
-        request.data["lawyer"] = lawyer.id  # Assign the lawyer automatically
+        # Create a mutable copy of request.data and add lawyer ID
+        mutable_data = request.data.copy()
+        mutable_data["lawyer"] = lawyer.id  # Assign the lawyer automatically
 
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=mutable_data)
         serializer.is_valid(raise_exception=True)
         serializer.save(lawyer=lawyer)  # Save with lawyer
+
 
         # Email notifications (same as before)
         lawyer_email = lawyer.email
