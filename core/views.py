@@ -67,32 +67,19 @@ class ContactRequestViewSet(viewsets.ModelViewSet):
     serializer_class = ContactRequestSerializer
 
     def create(self, request, *args, **kwargs):
-        """
-        Automatically assign the lawyer based on request origin.
-        """
-        data = request.data.copy()
-        
-        # Determine the lawyer based on the frontend request
-        if "lawyer_email" in data:
-            try:
-                lawyer = Lawyer.objects.get(email=data["lawyer_email"])
-                data["lawyer"] = lawyer.id  # Assign lawyer ID
-            except Lawyer.DoesNotExist:
-                return Response({"error": "Lawyer not found"}, status=status.HTTP_404_NOT_FOUND)
-        else:
-            return Response({"error": "Lawyer email is required"}, status=status.HTTP_400_BAD_REQUEST)
-
-        serializer = self.get_serializer(data=data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         contact_request = serializer.save()
 
-        # Send mail to lawyer
-        lawyer_email = lawyer.email
-        lawyer_name = lawyer.name
+        # Email notifications (unchanged)
+        lawyer_email = contact_request.lawyer.email
+        lawyer_name = contact_request.lawyer.name
         client_name = contact_request.name
         client_email = contact_request.email
+        client_phone = contact_request.phone
         message = contact_request.message
 
+        # Send mail to lawyer
         lawyer_email_body = f"""
 Hello {lawyer_name},
 
@@ -100,6 +87,7 @@ You have received a new service request.
 
 Client Name: {client_name}
 Client Email: {client_email}
+Client Phone Number: {client_phone}
 
 Message:
 {message}
@@ -115,25 +103,25 @@ Please respond as soon as possible.
             reply_to=[client_email],
         )
         lawyer_email_msg.send(fail_silently=False)
-
+         
         # Send confirmation email to client
         client_email_body = f"""
 Dear {client_name},
-
+        
 Your request for our services has been received.
 
 We will contact you shortly.
 
 Thank you for using our services!
 
-Regards,  
+Regards,
 {lawyer_name}
 """
 
         client_email_msg = EmailMessage(
             subject="Service Request Confirmation",
             body=client_email_body,
-            from_email=settings.EMAIL_HOST_USER,  # Use Django's email host
+            from_email=settings.EMAIL_HOST_USER,
             to=[client_email],
             reply_to=[lawyer_email]
         )
